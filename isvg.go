@@ -1,9 +1,11 @@
 package isvg
 
 import (
+	"os"
 	"os/exec"
 
 	"github.com/toukii/bytes"
+	"github.com/toukii/icat"
 )
 
 func Decode(bs []byte) ([]byte, error) {
@@ -17,4 +19,14 @@ func Decode(bs []byte) ([]byte, error) {
 	}
 
 	return w.Bytes(), nil
+}
+
+func Display(bs []byte) error {
+	cmd := exec.Command("rsvg-convert")
+
+	w := icat.NewEncodeWr(os.Stdout, nil)
+	defer w.FlushStdout()
+	cmd.Stdout = w
+	cmd.Stdin = bytes.NewReader(bs)
+	return cmd.Run()
 }

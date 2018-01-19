@@ -19,3 +19,9 @@ func TestIsvg(t *testing.T) {
 		t.Errorf("%s", err)
 	}
 }
+
+func TestDisplay(t *testing.T) {
+	if err := Display(goutils.ReadFile("github.svg")); err != nil {
+		t.Errorf("%s", err)
+	}
+}
